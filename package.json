@@ -16,6 +16,7 @@
   "homepage": "http",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "dateformat": "^4.5.1",
     "ejs": "^2.5.5",
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.2.0",
@@ -23,10 +24,12 @@
     "lodash": "^3.10.1",
     "method-override": "^2.3.7",
     "mongoose": "^5.12.2",
+    "node-fetch": "^2.6.1",
     "node-session": "^1.2.1",
     "nodemon": "^1.11.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "picomatch": "^2.2.2"
+    "picomatch": "^2.2.2",
+    "unsplash-js": "^7.0.8"
   }
 }

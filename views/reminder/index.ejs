@@ -1,12 +1,12 @@
 <div class="container">
-  <h1 class="page-header"><% user.name %>'s Reminders</h1>
+  <h1 class="page-header"><%= user.name %>'s Reminders</h1>
 
 <ul class="list-group">
   <% reminders.forEach(function (reminderItem) { if (reminderItem.user == user.id) { %>
     <li class="list-group-item">
       <strong><%= reminderItem.title %>: </strong>
       <%= reminderItem.description %>
-      || Completed:
+      || <%= reminderItem.date %> || Completed:
       <% if (reminderItem.completed == true) { %>
         <span class="badge badge-success">True</span>
       <% } else if (reminderItem.completed == false) { %>

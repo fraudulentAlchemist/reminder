@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 class="page-header">Reminders</h1>
+  <h1 class="page-header"><%= user.name %>'s Reminders</h1>
 
     <ul class="list-group">
       <li class="list-group-item">
@@ -18,7 +18,25 @@
         <form class="deleteForm "method="POST" action=<%= "/reminder/delete/" + reminderItem.id %>>
           <button type="submit" class="btn btn-danger">Delete</button>
         </form>
-
+        <div>
+          <span>
+            <% reminderItem.tags.forEach((tag) => { %>
+              #<%= tag %>&nbsp;
+            <% }) %>
+        </span>
+        </div>
+        <div>
+          <h5><%= reminderItem.date %></h5>
+        </div>
+        <div>
+          <ul>
+            <% reminderItem.subtasks.forEach(subtask) => { %>
+              <li>
+                <%= subtask.trim() %>
+              </li>
+            <% } %>
+          </ul>
+        </div>
       </li>
     </ul>
 

@@ -1,9 +1,9 @@
 let database = require("../database");
 const userModel = require("../models/userModel");
+const dateFormat = require("dateformat");
 
 let remindersController = {
   list: (req, res) => {
-    console.log(`User is: ${req.user}`)
     res.render("reminder/index", { user: userModel.findById(req.user), reminders: database.reminders.filter((reminder) => {reminder.user == req.user}) });
   },
 
@@ -24,14 +24,22 @@ let remindersController = {
   },
 
   create: (req, res) => {
+    let subtasks = req.body.subtasks.trim().split(/[,;]+/g);
+    subtasks.forEach((subtask) => {subtasks.subtask.trim()});
+
     let reminder = {
       id: database.reminders.length + 1,
       user: req.user,
       title: req.body.title,
       description: req.body.description,
+      date: dateFormat(req.body.date, "DDDD, mmmm d, h:MM TT"),
+      tags: req.body.tags.trim().split(/[,;\s]+/g),
+      subtasks: subtasks,
       completed: false,
     };
+
     database.reminders.push(reminder);
+
     res.redirect("/reminders");
   },
 
@@ -48,17 +56,27 @@ let remindersController = {
     let searchResult = database.reminders.find(function (reminder) {
       return reminder.id == reminderToUpdate;
     });
+    
     if (searchResult != undefined) {
       let upd = database.reminders.indexOf(searchResult);
+
+      let subtasks = req.body.subtasks.trim().split(/[,;]+/g);
+      subtasks.forEach((subtask) => {subtasks.subtask.trim()});
+
       let reminder = {
         id: reminderToUpdate,
         user: req.user,
         title: req.body.title,
         description: req.body.description,
+        date: dateFormat(req.body.date, "DDDD, mmmm d, h:MM TT"),
+        tags: req.body.tags.trim().split(/[,;\s]+/g),
+        subtasks: subtasks,
         completed: req.body.completed,
       };
+
       database.reminders.splice(upd, 1, reminder);
     };
+
     res.redirect("/reminders");
   },
 
