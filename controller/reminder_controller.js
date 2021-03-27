@@ -3,7 +3,8 @@ const userModel = require("../models/userModel");
 
 let remindersController = {
   list: (req, res) => {
-    res.render("reminder/index", { user: req.user, reminders: database.reminders.filter((reminder) => {reminder.user == req.user.id}) });
+    console.log(`User is: ${req.user}`)
+    res.render("reminder/index", { user: userModel.findById(req.user), reminders: database.reminders.filter((reminder) => {reminder.user == req.user}) });
   },
 
   new: (req, res) => {
@@ -13,19 +14,19 @@ let remindersController = {
   listOne: (req, res) => {
     let reminderToFind = req.params.id;
     let searchResult = database.reminders.find(function (reminder) {
-      return reminder.id == reminderToFind && reminder.user == req.user.id;
+      return reminder.id == reminderToFind && reminder.user == req.user;
     });
     if (searchResult != undefined) {
       res.render("reminder/single-reminder", { reminderItem: searchResult });
     } else {
-      res.render("reminder/index", { user: req.user, reminders: database.reminders.filter((reminder) => {reminder.user == req.user.id}) });
+      res.render("reminder/index", { user: userModel.findById(req.user), reminders: database.reminders.filter((reminder) => {reminder.user == req.user}) });
     }
   },
 
   create: (req, res) => {
     let reminder = {
       id: database.reminders.length + 1,
-      user: req.user.id,
+      user: req.user,
       title: req.body.title,
       description: req.body.description,
       completed: false,
@@ -37,7 +38,7 @@ let remindersController = {
   edit: (req, res) => {
     let reminderToFind = req.params.id;
     let searchResult = database.reminders.find(function (reminder) {
-      return reminder.id == reminderToFind && reminder.user == req.user.id;
+      return reminder.id == reminderToFind && reminder.user == req.user;
     });
     res.render("reminder/edit", { reminderItem: searchResult });
   },
@@ -51,7 +52,7 @@ let remindersController = {
       let upd = database.reminders.indexOf(searchResult);
       let reminder = {
         id: reminderToUpdate,
-        user: req.user.id,
+        user: req.user,
         title: req.body.title,
         description: req.body.description,
         completed: req.body.completed,
@@ -64,7 +65,7 @@ let remindersController = {
   delete: (req, res) => {
     let reminderToDelete = req.params.id;
     let searchResult = database.reminders.find(function (reminder) {
-      return reminder.id == reminderToDelete && reminder.user == req.user.id;
+      return reminder.id == reminderToDelete && reminder.user == req.user;
     });
     if (searchResult != undefined) {
       let del = database.reminders.indexOf(searchResult);

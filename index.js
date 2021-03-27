@@ -69,8 +69,11 @@ app.post("/reminder/delete/:id", ensureAuthenticated, reminderController.delete)
 app.get("/register", forwardAuthenticated, authController.register);
 app.get("/login", forwardAuthenticated, authController.login);
 app.post("/register", forwardAuthenticated, authController.registerSubmit);
-app.post("/login", forwardAuthenticated, authController.loginSubmit);
-app.get("/logout", authController.loginSubmit);
+app.post("/login", passport.authenticate("local", {
+  successRedirect: "/reminders",
+  failureRedirect: "/login",
+}));
+app.get("/logout", authController.login);
 
 app.listen(port, function () {
   console.log(
