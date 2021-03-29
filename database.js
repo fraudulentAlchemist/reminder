@@ -1,3 +1,15 @@
+const dateFormat = require("dateformat");
+
+const { createApi } =  require("unsplash-js");
+const fetch = require("node-fetch");
+
+const unsplash = createApi({
+  // Don't forget to set your access token here!
+  // See https://unsplash.com/developers
+  accessKey: "doo3ih36hnM9ilGcEMRF2nFYe0V8TOLw9fJ3wvOWzes",
+  fetch: fetch,
+});
+
 let Database = {
     users: [
         {
@@ -5,15 +17,15 @@ let Database = {
             name: "Jimmy Smith",
             email: "jimmy123@gmail.com",
             password: "jimmy123!",
-            profile: "https://images.unsplash.com/photo-1599242460737-5174dba06145?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDIwN3xCbi1EanJjQnJ3b3x8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-            friends: [ {id: 3, name: "Jonathan Chen"} ],
+            profile: unsplash.photos.getRandom({count: 1}),
+            friends: [ 3, ],
         },
         {
             id: 2,
             name: "Johnny Doe",
             email: "johnny123@gmail.com",
             password: "johnny123!",
-            profile: "https://images.unsplash.com/photo-1437448317784-3a480be9571e?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDc0fDZzTVZqVExTa2VRfHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+            profile: unsplash.photos.getRandom({count: 1}),
             friends: [],
         },
         {
@@ -21,8 +33,8 @@ let Database = {
             name: "Jonathan Chen",
             email: "jonathan123@gmail.com",
             password: "jonathan123!",
-            profile: "https://images.unsplash.com/photo-1520518372269-15c0819cdc08?ixid=MXwxMjA3fDB8MHx0b3BpYy1mZWVkfDMzfHRvd0paRnNrcEdnfHxlbnwwfHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
-            friends: [ {id: 1, name: "Jimmy Smith"},{id: 2, name: "Johnny Doe"} ],
+            profile: unsplash.photos.getRandom({count: 1}),
+            friends: [ 1, 2, ],
         },
     ],
     reminders: [
@@ -31,7 +43,7 @@ let Database = {
             user: 2,
             title: "Work",
             description: "abcabc",
-            date: "2021-03-28T23:59",
+            date: "2021-03-31T23:59",
             subtasks: [ "Subtask one", "Subtask two", "Subtask three", ],
             tags: [ "tag1", "tag2", "tag3", "tag4", "tag5", ],
             completed: true,
@@ -41,7 +53,7 @@ let Database = {
             user: 3,
             title: "abc",
             description: "abcabc",
-            date: "2021-03-28T23:59",
+            date: "2021-03-31T23:59",
             subtasks: [ "Subtask one", "Subtask two", "Subtask three", ],
             tags: [ "tag1", "tag2", "tag3", "tag4", "tag5", ],
             completed: true,
@@ -61,7 +73,7 @@ let Database = {
             user: 2,
             title: "abc",
             description: "abcabc",
-            date: "2021-03-28T23:59",
+            date: "2021-03-31T23:59",
             subtasks: [ "Subtask one", "Subtask two", "Subtask three", ],
             tags: [ "tag1", "tag2", "tag3", "tag4", "tag5", ],
             completed: true,
@@ -81,7 +93,7 @@ let Database = {
             user: 1,
             title: "abc",
             description: "abcabc",
-            date: "2021-03-28T23:59",
+            date: "2021-03-31T23:59",
             subtasks: [ "Subtask one", "Subtask two", "Subtask three", ],
             tags: [ "tag1", "tag2", "tag3", "tag4", "tag5", ],
             completed: true,
@@ -91,7 +103,7 @@ let Database = {
             user: 3,
             title: "abc",
             description: "abcabc",
-            date: "2021-03-28T23:59",
+            date: "2021-03-31T23:59",
             subtasks: [ "Subtask one", "Subtask two", "Subtask three", ],
             tags: [ "tag1", "tag2", "tag3", "tag4", "tag5", ],
             completed: true,
@@ -101,7 +113,7 @@ let Database = {
             user: 2,
             title: "abc",
             description: "abcabc",
-            date: "2021-03-28T23:59",
+            date: "2021-03-31T23:59",
             subtasks: [ "Subtask one", "Subtask two", "Subtask three", ],
             tags: [ "tag1", "tag2", "tag3", "tag4", "tag5", ],
             completed: true,
@@ -111,7 +123,7 @@ let Database = {
             user: 2,
             title: "abc",
             description: "abcabc",
-            date: "2021-03-28T23:59",
+            date: "2021-03-31T23:59",
             subtasks: [ "Subtask one", "Subtask two", "Subtask three", ],
             tags: [ "tag1", "tag2", "tag3", "tag4", "tag5", ],
             completed: false,

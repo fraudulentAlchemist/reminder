@@ -1,4 +1,5 @@
 <div class="container">
+  <!-- <img id="profile" src="<% user.profile %>"> -->
   <h1 class="page-header"><%= user.name %>'s Reminders</h1>
 
     <ul class="list-group">
@@ -12,12 +13,20 @@
             <span class="label label-danger">False</span>
           <% } %>
         </h4>
+        <div>
+          <h5><%= dateFormat(reminderItem.date, "DDDD, mmmm d, h:MM TT") %></h5>
+        </div>
 
-        <a class="btn btn-warning" href=<%= "/reminder/" + reminderItem.id + "/edit" %>>Edit</a>
+        <div>
+          <ul>
+            <% reminderItem.subtasks.forEach((subtask) => { %>
+              <li>
+                <%= subtask.trim() %>
+              </li>
+            <% }) %>
+          </ul>
+        </div>
 
-        <form class="deleteForm "method="POST" action=<%= "/reminder/delete/" + reminderItem.id %>>
-          <button type="submit" class="btn btn-danger">Delete</button>
-        </form>
         <div>
           <span>
             <% reminderItem.tags.forEach((tag) => { %>
@@ -25,18 +34,12 @@
             <% }) %>
         </span>
         </div>
-        <div>
-          <h5><%= reminderItem.date %></h5>
-        </div>
-        <div>
-          <ul>
-            <% reminderItem.subtasks.forEach(subtask) => { %>
-              <li>
-                <%= subtask.trim() %>
-              </li>
-            <% } %>
-          </ul>
-        </div>
+
+        <a class="btn btn-warning" href=<%= "/reminder/" + reminderItem.id + "/edit" %>>Edit</a>
+
+        <form class="deleteForm "method="POST" action=<%= "/reminder/delete/" + reminderItem.id %>>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
       </li>
     </ul>
 

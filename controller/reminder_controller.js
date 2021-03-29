@@ -4,8 +4,8 @@ const dateFormat = require("dateformat");
 
 let remindersController = {
   list: (req, res) => {
-    console.log(req.user);
-    res.render("reminder/index", { user: req.user, reminders: database.reminders.filter((reminder) => {reminder.user == req.user.id}) });
+    console.log(req.user.profile);
+    res.render("reminder/index", { user: req.user, reminders: database.reminders.filter((reminder) => {return reminder.user == req.user.id}), dateFormat: dateFormat });
   },
 
   new: (req, res) => {
@@ -18,24 +18,27 @@ let remindersController = {
       return reminder.id == reminderToFind && reminder.user == req.user.id;
     });
     if (searchResult != undefined) {
-      res.render("reminder/single-reminder", { reminderItem: searchResult });
+      res.render("reminder/single-reminder", { user: req.user, reminderItem: searchResult, dateFormat: dateFormat });
     } else {
-      console.log(req.user);
-      res.render("reminder/index", { user: req.user, reminders: database.reminders.filter((reminder) => {reminder.user == req.user.id}) });
+      res.render("reminder/index", { user: req.user, reminders: database.reminders.filter((reminder) => {return reminder.user == req.user.id}), dateFormat: dateFormat });
     }
   },
 
   create: (req, res) => {
-    let subtasks = req.body.subtasks.trim().split(/[,;]+/g);
-    subtasks.forEach((subtask) => {subtasks.subtask.trim()});
+    let subtaskString = req.body.subtasks.trim();
+    let subtasks = subtaskString.split(/[\.,;]+/g);
+    subtasks.forEach((subtask) => {subtask = subtask.trim()});
+
+    let tagString = req.body.tags.trim();
+    let tags = tagString.split(/[,;\s]+/g);
 
     let reminder = {
       id: database.reminders.length + 1,
       user: req.user.id,
       title: req.body.title,
       description: req.body.description,
-      date: dateFormat(req.body.date, "DDDD, mmmm d, h:MM TT"),
-      tags: req.body.tags.trim().split(/[,;\s]+/g),
+      date: req.body.date,
+      tags: tags,
       subtasks: subtasks,
       completed: false,
     };
@@ -61,22 +64,28 @@ let remindersController = {
 
     if (searchResult != undefined) {
       let upd = database.reminders.indexOf(searchResult);
+      let subtaskString = req.body.subtasks.trim();
+      let subtasks = subtaskString.split(/[\.,;]+/g);
+      subtasks.forEach((subtask) => {subtask = subtask.trim()});
 
-      let subtasks = req.body.subtasks.trim().split(/[,;]+/g);
-      subtasks.forEach((subtask) => {subtasks.subtask.trim()});
+      let tagString = req.body.tags.trim();
+      let tags = tagString.split(/[,;\s]+/g);
 
       let reminder = {
-        id: reminderToUpdate,
+        id: Number(reminderToUpdate),
         user: req.user.id,
         title: req.body.title,
         description: req.body.description,
-        date: dateFormat(req.body.date, "DDDD, mmmm d, h:MM TT"),
-        tags: req.body.tags.trim().split(/[,;\s]+/g),
+        date: req.body.date,
+        tags: tags,
         subtasks: subtasks,
-        completed: req.body.completed,
+        completed: Boolean(req.body.completed),
       };
 
       database.reminders.splice(upd, 1, reminder);
+      console.log(`New completed status: ${req.body.completed}`);
+      console.log("New reminder details:");
+      console.log(reminder);
     };
 
     res.redirect("/reminders");
@@ -95,8 +104,9 @@ let remindersController = {
 
       // Decrement reminder IDs
       database.reminders.forEach((reminder,index) => {
+        console.log(`Reminder ID: ${reminder.id}`);
         if (index >= del) {
-          database.reminders.reminder.id--;
+          --database.reminders[index].id;
         }
       });
     };
