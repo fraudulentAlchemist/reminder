@@ -17,7 +17,7 @@ let Database = {
             name: "Jimmy Smith",
             email: "jimmy123@gmail.com",
             password: "jimmy123!",
-            profile: unsplash.photos.getRandom({count: 1}),
+            profile: "photo",
             friends: [ 3, ],
         },
         {
@@ -25,7 +25,7 @@ let Database = {
             name: "Johnny Doe",
             email: "johnny123@gmail.com",
             password: "johnny123!",
-            profile: unsplash.photos.getRandom({count: 1}),
+            profile: "photo",
             friends: [],
         },
         {
@@ -33,7 +33,7 @@ let Database = {
             name: "Jonathan Chen",
             email: "jonathan123@gmail.com",
             password: "jonathan123!",
-            profile: unsplash.photos.getRandom({count: 1}),
+            profile: "photo",
             friends: [ 1, 2, ],
         },
     ],
@@ -130,5 +130,20 @@ let Database = {
         },
     ]
 };
+
+unsplash.photos.getRandom({count: Database.users.length}).then(result => {
+    if (result.errors) {
+        // handle error here
+        console.log('error occurred: ', result.errors[0]);
+    } else {
+        // handle success here
+        console.log(result);
+        //const photos = result.response;
+        //Database.users.forEach((user, index) => {
+            //Database.users[user].profile = photos[index];
+            //console.log(photos[index]);
+        //});
+    }
+});
 
 module.exports = Database;
