@@ -5,6 +5,7 @@ const session = require("express-session");
 const ejsLayouts = require("express-ejs-layouts");
 const reminderController = require("./controller/reminder_controller");
 const authController = require("./controller/auth_controller");
+const friendsController = require("./controller/friends_controller");
 const port = process.env.port || 8000;
 
 app.set("view engine", "ejs");
@@ -64,6 +65,9 @@ app.post("/reminder/update/:id", ensureAuthenticated, reminderController.update)
 
 // Implement this yourself
 app.post("/reminder/delete/:id", ensureAuthenticated, reminderController.delete);
+
+app.get("/addFriend", ensureAuthenticated, friendsController.viewUsers);
+app.get("/addFriend/:id/add", ensureAuthenticated, friendsController.addFriend);
 
 // Fix this to work with passport! The registration does not need to work, you can use the fake database for this.
 app.get("/register", forwardAuthenticated, authController.register);

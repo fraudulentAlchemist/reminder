@@ -1,21 +1,44 @@
 <div class="container">
-  <!-- <img id="profile" src="<% user.profile %>"> -->
-  <h1 class="page-header"><%= user.name %>'s Reminders</h1>
+  <div>
+    <!-- <img id="profile" src="<% user.profile %>"> -->
+    <h1 class="page-header">My Reminders</h1>
 
-<ul class="list-group">
-  <% reminders.forEach(function (reminderItem) { if (reminderItem.user == user.id) { %>
-    <li class="list-group-item">
-      <strong><%= reminderItem.title %>: </strong>
-      <%= reminderItem.description %>
-      || <%= dateFormat(reminderItem.date, "DDDD, mmmm d, h:MM TT") %> || Completed:
-      <% if (reminderItem.completed == true) { %>
-        <span class="badge badge-success">True</span>
-      <% } else if (reminderItem.completed == false) { %>
-        <span class="badge badge-danger">False</span>
-      <% } %>
-      <a class="pull-right" href=<%= "/reminder/" + reminderItem.id %>>View</a>
-    </li>
-  <% }}) %>
-</ul>
-
+  <ul class="list-group">
+    <% reminders.forEach(function (reminderItem) { if (reminderItem.user == user.id) { %>
+      <li class="list-group-item">
+        <strong><%= reminderItem.title %>: </strong>
+        <%= reminderItem.description %>
+        || <%= dateFormat(reminderItem.date, "DDDD, mmmm d, h:MM TT") %> || Completed:
+        <% if (reminderItem.completed == true) { %>
+          <span class="badge badge-success">True</span>
+        <% } else if (reminderItem.completed == false) { %>
+          <span class="badge badge-danger">False</span>
+        <% } %>
+        <a class="pull-right" href=<%= "/reminder/" + reminderItem.id %>>View</a>
+      </li>
+    <% }}) %>
+  </ul>
+</div>
+<br>
+<br>
+<div>
+  <h2 class="page-header">Friend's Reminders</h2>
+  <% friendReminders.forEach(function (friend) { %>
+    <h3><%= friend.name %>'s Reminders</h3>
+    <ul class="list-group">
+      <% friend.reminders.forEach(function (reminderItem) { %>
+        <li class="list-group-item">
+          <strong><%= reminderItem.title %>: </strong>
+          <%= reminderItem.description %>
+          || <%= dateFormat(reminderItem.date, "DDDD, mmmm d, h:MM TT") %> || Completed:
+          <% if (reminderItem.completed == true) { %>
+            <span class="badge badge-success">True</span>
+          <% } else if (reminderItem.completed == false) { %>
+            <span class="badge badge-danger">False</span>
+          <% } %>
+        </li>
+      <% }) %>
+    </ul>
+  <% }) %>
+</div>
 </div>

@@ -5,7 +5,25 @@ const dateFormat = require("dateformat");
 let remindersController = {
   list: (req, res) => {
     console.log(req.user.profile);
-    res.render("reminder/index", { user: req.user, reminders: database.reminders.filter((reminder) => {return reminder.user == req.user.id}), dateFormat: dateFormat });
+
+    let friendReminders = [];
+
+    let loadFriendReminders = function() {
+      req.user.friends.forEach((friend) => {
+        friendReminders.push({
+          name: database.users.find((user) => {return user.id == friend}).name,
+          reminders: database.reminders.filter((reminder) => {return reminder.user == friend}),
+        })
+      })
+    };
+
+    loadFriendReminders();
+    res.render("reminder/index", {
+      user: req.user,
+      reminders: database.reminders.filter((reminder) => {return reminder.user == req.user.id}),
+      friendReminders: friendReminders,
+      dateFormat: dateFormat,
+    });
   },
 
   new: (req, res) => {
@@ -20,7 +38,7 @@ let remindersController = {
     if (searchResult != undefined) {
       res.render("reminder/single-reminder", { user: req.user, reminderItem: searchResult, dateFormat: dateFormat });
     } else {
-      res.render("reminder/index", { user: req.user, reminders: database.reminders.filter((reminder) => {return reminder.user == req.user.id}), dateFormat: dateFormat });
+      res.render("reminder/index", { user: req.user, reminders: database.reminders.filter((reminder) => {return reminder.user == req.user.id}), dateFormat: dateFormat, });
     }
   },
 

@@ -21,13 +21,13 @@ let authController = {
   },
 
   registerSubmit: (req, res) => {
-    let photo = unsplash.photos.getRandom({});
+    //let photo = unsplash.photos.getRandom({});
     let newUser = {
       id: database.users.length + 1,
       name: `${req.body.firstname} ${req.body.lastname}`,
       email: req.body.email,
       password: req.body.password,
-      profile: photo.urls.regular.json(),
+      profile: "photo", //photo.urls.regular.json(),
       friends: [],
     }
     database.users.push(newUser);

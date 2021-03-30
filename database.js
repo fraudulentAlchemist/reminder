@@ -131,19 +131,19 @@ let Database = {
     ]
 };
 
-unsplash.photos.getRandom({count: Database.users.length}).then(result => {
-    if (result.errors) {
+//unsplash.photos.getRandom({count: Database.users.length}).then(result => {
+    //if (result.errors) {
         // handle error here
-        console.log('error occurred: ', result.errors[0]);
-    } else {
+        //console.log('error occurred: ', result.errors[0]);
+    //} else {
         // handle success here
-        console.log(result);
+        //console.log(result);
         //const photos = result.response;
         //Database.users.forEach((user, index) => {
             //Database.users[user].profile = photos[index];
             //console.log(photos[index]);
         //});
-    }
-});
+    //}
+//});
 
 module.exports = Database;
