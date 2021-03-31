@@ -1,6 +1,6 @@
 <div class="container">
-  <!-- <img id="profile" src="<% user.profile %>"> -->
-  <h1 class="page-header"><%= user.name %>'s Reminders</h1>
+  <img src=<%= user.profile + "&h=500&fit=max" %>>
+  <h1 class="page-header">My Reminders</h1>
 
     <ul class="list-group">
       <li class="list-group-item">
@@ -8,9 +8,9 @@
         <h4><%= reminderItem.description %></h4>
         <h4>Completed:
           <% if (reminderItem.completed == true) { %>
-            <span class="label label-success">True</span>
+            <span class="badge badge-success">True</span>
           <% } else if (reminderItem.completed == false) { %>
-            <span class="label label-danger">False</span>
+            <span class="badge badge-danger">False</span>
           <% } %>
         </h4>
         <div>
@@ -21,7 +21,7 @@
           <ul>
             <% reminderItem.subtasks.forEach((subtask) => { %>
               <li>
-                <%= subtask.trim() %>
+                <h5><%= subtask.trim() %></h5>
               </li>
             <% }) %>
           </ul>

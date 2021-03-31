@@ -21,15 +21,28 @@ let authController = {
   },
 
   registerSubmit: (req, res) => {
-    //let photo = unsplash.photos.getRandom({});
     let newUser = {
       id: database.users.length + 1,
       name: `${req.body.firstname} ${req.body.lastname}`,
       email: req.body.email,
       password: req.body.password,
-      profile: "photo", //photo.urls.regular.json(),
+      profile: "photo",
       friends: [],
     }
+    unsplash.photos.getRandom({}).then(result => {
+      if (result.errors) {
+        // handle error here
+        console.log('error occurred: ', result.errors[0]);
+      } else {
+        // handle success here
+        console.log(result);
+        const photo = result.response;
+        profile = photo.urls.full;
+        newUser.profile = profile;
+        console.log(profile);
+        };
+      }
+    );
     database.users.push(newUser);
     res.redirect("/login");
   },

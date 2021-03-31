@@ -1,6 +1,6 @@
 <div class="container">
   <div>
-    <!-- <img id="profile" src="<% user.profile %>"> -->
+    <img src=<%= user.profile + "&h=500&fit=max" %>>
     <h1 class="page-header">My Reminders</h1>
 
   <ul class="list-group">
@@ -24,6 +24,7 @@
 <div>
   <h2 class="page-header">Friend's Reminders</h2>
   <% friendReminders.forEach(function (friend) { %>
+    <img src=<%= friend.profile + "&h=200&fit=max" %>>
     <h3><%= friend.name %>'s Reminders</h3>
     <ul class="list-group">
       <% friend.reminders.forEach(function (reminderItem) { %>

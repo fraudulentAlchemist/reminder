@@ -66,8 +66,8 @@ app.post("/reminder/update/:id", ensureAuthenticated, reminderController.update)
 // Implement this yourself
 app.post("/reminder/delete/:id", ensureAuthenticated, reminderController.delete);
 
-app.get("/addFriend", ensureAuthenticated, friendsController.viewUsers);
-app.get("/addFriend/:id/add", ensureAuthenticated, friendsController.addFriend);
+app.get("/friends", ensureAuthenticated, friendsController.viewUsers);
+app.get("/friends/addFriend/:id", ensureAuthenticated, friendsController.addFriend);
 
 // Fix this to work with passport! The registration does not need to work, you can use the fake database for this.
 app.get("/register", forwardAuthenticated, authController.register);

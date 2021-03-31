@@ -1,14 +1,10 @@
 <div class="container">
     <h1 class="page-header">Add a Friend</h1>
-    <% if (searchUsers.length == 0) { %>
-        <h4><i>Everyone is already your friend!</i></h4>
-    <% } else { %>
-        <ul class="list-group">
-            <% searchUsers.forEach((possibleFriend) => {
-                <li class="list-group-item">
-                    <a href=<%= "/addFriend/" + possibleFriend.id + "/add" %> /*Why doesn't this work for me?*/><%= possibleFriend.name %></a>
-                </li>
-            }); %>
-        </ul>
-    <% } %>
+    <ul class="list-group">
+         <% searchUsers.forEach((possibleFriend) => { %>
+            <li class="list-group-item">
+                <a href=<%= "/friends/addFriend/" + possibleFriend.id %>><img src=<%= possibleFriend.profile + "&w=200&h=200" %>> <h3><%= possibleFriend.name %></h3></a>
+            </li>
+        <% }) %>
+    </ul>
 </div>

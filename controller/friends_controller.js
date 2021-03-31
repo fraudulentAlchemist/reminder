@@ -2,15 +2,19 @@ let database = require("../database");
 
 let friendsController = {
     viewUsers: (req, res) => {
-        let searchUsers = database.users.filter((possibleFriend) => {return !req.user.friends.includes(possibleFriend.id) && possibleFriend.id != req.user.id});
+        let myIndex = database.users.findIndex((user) => {return user.id == req.user.id});
+        console.log(myIndex);
+        let searchUsers = database.users.filter((possibleFriend) => {return (possibleFriend.id != req.user.id)});
+
         res.render("friends/add-friend", { user: req.user, searchUsers: searchUsers, })
     },
     addFriend: (req, res) => {
+        let myIndex = database.users.findIndex((user) => {return user == req.user});
         let newFriend = req.params.id;
-        if (newFriend != req.user.id && !req.user.friends.includes(newFriend)) {
-            database.user[user].friends.push(newFriend);
+        if (newFriend != req.user.id && !database.users[myIndex].friends.includes(newFriend)) {
+            database.users[myIndex].friends.push(newFriend);
         }
-        res.redirect("/addFriend");
+        res.redirect("/friends");
     }
 }
 
